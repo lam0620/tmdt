@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Giỏ hàng & Thanh toán (B2C) — Đạt Hiển | Mockup</title>
+<link rel="stylesheet" href="assets/app.css"/>
+</head>
+<body>
+<div id="site-header"></div>
+
+<div class="wrap">
+  <div class="crumb"><a href="index.html">Trang chủ</a><span class="sep">›</span><span>Giỏ hàng</span></div>
+  <h1 class="section-title">Giỏ hàng & thanh toán</h1>
+  <p class="lead">Luồng dành cho khách hàng <b>B2C</b> — mua trực tiếp vật tư, hóa chất, chuẩn hiệu chuẩn và thiết bị nhỏ. Thanh toán trực tuyến, trải nghiệm như bán lẻ hiện đại.</p>
+
+  <div class="steps">
+    <div class="step done"><span class="n">✓</span> Giỏ hàng</div><span class="bar"></span>
+    <div class="step on"><span class="n">2</span> Giao hàng &amp; thanh toán</div><span class="bar"></span>
+    <div class="step"><span class="n">3</span> Xác nhận đơn</div>
+  </div>
+</div>
+
+<div class="wrap checkout-grid">
+  <!-- CART ITEMS -->
+  <div>
+    <div class="panel" style="margin-bottom:20px">
+      <div id="cart-items"></div>
+    </div>
+
+    <!-- CHECKOUT FORM PREVIEW -->
+    <div class="panel">
+      <h3 style="font-size:17px;margin-bottom:16px">Thông tin giao hàng</h3>
+      <div class="f-row">
+        <div class="field"><label>Họ và tên *</label><input placeholder="Người nhận"/></div>
+        <div class="field"><label>Điện thoại *</label><input placeholder="09xx xxx xxx"/></div>
+      </div>
+      <div class="field"><label>Địa chỉ *</label><input placeholder="Số nhà, đường, phường/xã"/></div>
+      <div class="f-row">
+        <div class="field"><label>Tỉnh / Thành phố *</label><select><option>TP. Hồ Chí Minh</option><option>Hà Nội</option><option>Đà Nẵng</option></select></div>
+        <div class="field"><label>Quận / Huyện *</label><select><option>Chọn quận/huyện</option></select></div>
+      </div>
+      <label class="f-check"><input type="checkbox"/> Xuất hóa đơn VAT cho doanh nghiệp</label>
+
+      <h3 style="font-size:17px;margin:20px 0 12px">Phương thức thanh toán</h3>
+      <label class="f-check pay-opt" style="border:1.5px solid var(--brand);border-radius:8px;padding:12px;background:var(--brand-050)"><input type="radio" name="pay" checked/> <span data-icon="card"></span> Thẻ / Cổng thanh toán trực tuyến (VNPAY, Momo)</label>
+      <label class="f-check pay-opt" style="border:1px solid var(--line);border-radius:8px;padding:12px;margin-top:8px"><input type="radio" name="pay"/> <span data-icon="bank"></span> Chuyển khoản ngân hàng</label>
+      <label class="f-check pay-opt" style="border:1px solid var(--line);border-radius:8px;padding:12px;margin-top:8px"><input type="radio" name="pay"/> <span data-icon="box"></span> Thanh toán khi nhận hàng (COD)</label>
+    </div>
+  </div>
+
+  <!-- ORDER SUMMARY -->
+  <div class="summary">
+    <h3 style="font-size:16px;margin-bottom:12px">Đơn hàng</h3>
+    <div class="s-row"><span>Tạm tính</span><b id="subtotal">—</b></div>
+    <div class="s-row"><span>Phí vận chuyển</span><b>Miễn phí</b></div>
+    <div class="s-row"><span>VAT (8%)</span><b id="vat">—</b></div>
+    <div class="field" style="margin:12px 0"><input placeholder="Mã giảm giá"/></div>
+    <div class="s-row s-total"><span>Tổng cộng</span><b id="grand">—</b></div>
+    <a class="btn btn-primary btn-block btn-lg" style="margin-top:16px" href="account.html">Tiến hành thanh toán →</a>
+    <p class="muted" style="font-size:12.5px;margin-top:12px">🔒 Thanh toán an toàn · 🚚 Giao toàn quốc · ↩️ Đổi trả theo chính sách</p>
+    <div style="border-top:1px solid var(--line);margin-top:14px;padding-top:12px;font-size:13px" class="muted">
+      💡 Cần số lượng lớn hoặc giá hợp đồng? <a href="rfq.html" style="color:var(--brand);font-weight:600">Chuyển sang yêu cầu báo giá →</a>
+    </div>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+
+<script src="assets/logo.js"></script>
+<script src="assets/catalog.js"></script>
+<script src="assets/app.js"></script>
+<script>
+DH.mountShell({cart:3});
+// B2C items = hóa chất / tiêu hao; give mock prices
+var b2c = DH.flatProducts().filter(function(p){return p.category!=='Thiết bị'}).slice(0,3);
+if(b2c.length<3){ b2c = b2c.concat(DH.flatProducts().slice(0,3-b2c.length)); }
+var prices=[1250000, 3480000, 890000], qtys=[2,1,3];
+function vnd(n){return n.toLocaleString('vi-VN')+' ₫';}
+var sub=0;
+document.getElementById('cart-items').innerHTML = b2c.map(function(p,i){
+  var line = prices[i]*qtys[i]; sub+=line;
+  return '<div class="li"><div class="li-thumb"><img src="'+p.img+'" alt="" onerror="this.remove()"/></div>'
+    +'<div><div class="li-man">'+p.manufacturer+' · '+p.category+'</div><div class="li-name">'+p.title+'</div>'
+    +'<div class="muted" style="font-size:13px;margin-top:4px">'+vnd(prices[i])+' / đơn vị</div></div>'
+    +'<div style="text-align:right"><div class="qty"><button>−</button><span>'+qtys[i]+'</span><button>+</button></div>'
+    +'<div style="font-weight:700;color:var(--navy);margin-top:8px">'+vnd(line)+'</div></div></div>';
+}).join('');
+var vat=Math.round(sub*0.08);
+document.getElementById('subtotal').textContent=vnd(sub);
+document.getElementById('vat').textContent=vnd(vat);
+document.getElementById('grand').textContent=vnd(sub+vat);
+</script>
+</body>
+</html>

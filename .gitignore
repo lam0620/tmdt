@@ -1,0 +1,8 @@
+# Claude Code local settings (machine-specific)
+.claude/
+
+# temp / editor / OS
+*.tmp
+*.tmp.*
+Thumbs.db
+.DS_Store

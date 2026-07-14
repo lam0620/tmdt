@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Tài khoản doanh nghiệp — Đạt Hiển | Mockup</title>
+<link rel="stylesheet" href="assets/app.css"/>
+</head>
+<body>
+<div id="site-header"></div>
+
+<div class="wrap">
+  <div class="crumb"><a href="index.html">Trang chủ</a><span class="sep">›</span><span>Tài khoản doanh nghiệp</span></div>
+</div>
+
+<div class="wrap acct">
+  <!-- SIDE NAV -->
+  <aside class="acct-nav">
+    <div class="a-user"><b>Phòng QC — Lọc dầu ABC</b><span class="muted" style="font-size:13px">Tài khoản doanh nghiệp · B2B</span></div>
+    <a class="on" href="#"><span data-icon="grid"></span> Tổng quan</a>
+    <a href="#"><span data-icon="doc"></span> Yêu cầu báo giá (RFQ)</a>
+    <a href="#"><span data-icon="box"></span> Đơn hàng</a>
+    <a href="#"><span data-icon="money"></span> Giá theo hợp đồng</a>
+    <a href="#"><span data-icon="fileCheck"></span> Tài liệu & CO/CQ</a>
+    <a href="#"><span data-icon="wrench"></span> Bảo trì & hiệu chuẩn</a>
+    <a href="#"><span data-icon="users"></span> Thành viên & phân quyền</a>
+    <a href="#"><span data-icon="gear"></span> Thông tin doanh nghiệp</a>
+  </aside>
+
+  <!-- MAIN -->
+  <div>
+    <h1 class="section-title">Xin chào, Phòng QC — Lọc dầu ABC 👋</h1>
+    <p class="lead">Theo dõi yêu cầu báo giá, đơn hàng và tài liệu — tất cả ở một nơi, đồng bộ với hệ thống Odoo của Đạt Hiển.</p>
+
+    <div class="stat-row">
+      <div class="stat"><div class="v">2</div><div class="l">RFQ đang chờ báo giá</div></div>
+      <div class="stat"><div class="v">1</div><div class="l">Báo giá cần duyệt</div></div>
+      <div class="stat"><div class="v">4</div><div class="l">Đơn hàng đang xử lý</div></div>
+      <div class="stat"><div class="v">12</div><div class="l">Thiết bị đã mua</div></div>
+    </div>
+
+    <!-- RFQ TABLE -->
+    <div class="panel" style="margin-bottom:22px">
+      <div class="sec-head" style="margin-bottom:14px"><h3 style="font-size:18px">Yêu cầu báo giá gần đây</h3><a class="link" href="rfq.html">+ Tạo RFQ mới</a></div>
+      <table class="tbl">
+        <thead><tr><th>Mã RFQ</th><th>Sản phẩm</th><th>Ngày gửi</th><th>Trạng thái</th><th></th></tr></thead>
+        <tbody id="rfq-rows"></tbody>
+      </table>
+    </div>
+
+    <!-- ORDERS TABLE -->
+    <div class="panel">
+      <div class="sec-head" style="margin-bottom:14px"><h3 style="font-size:18px">Đơn hàng</h3><a class="link" href="#">Xem tất cả →</a></div>
+      <table class="tbl">
+        <thead><tr><th>Mã đơn</th><th>Sản phẩm</th><th>Giá trị</th><th>Trạng thái</th><th></th></tr></thead>
+        <tbody id="order-rows"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+
+<script src="assets/logo.js"></script>
+<script src="assets/catalog.js"></script>
+<script src="assets/app.js"></script>
+<script>
+DH.mountShell({cart:3});
+var prods = DH.flatProducts().filter(function(p){return p.category==='Thiết bị'});
+function vnd(n){return n.toLocaleString('vi-VN')+' ₫';}
+
+var rfq=[
+  {id:'RFQ-2607',i:0,date:'12/07/2026',st:'st-quote',lbl:'Chờ báo giá'},
+  {id:'RFQ-2603',i:1,date:'08/07/2026',st:'st-confirm',lbl:'Đã có báo giá'},
+];
+document.getElementById('rfq-rows').innerHTML = rfq.map(function(r){
+  var p=prods[r.i]||prods[0];
+  return '<tr><td><b>'+r.id+'</b></td><td>'+p.manufacturer+' — '+p.title.slice(0,42)+'…</td>'
+    +'<td>'+r.date+'</td><td><span class="status '+r.st+'">'+r.lbl+'</span></td>'
+    +'<td><a class="link" href="#">Xem →</a></td></tr>';
+}).join('');
+
+var orders=[
+  {id:'DH-8842',i:2,val:428000000,st:'st-confirm',lbl:'Đang giao'},
+  {id:'DH-8790',i:3,val:156000000,st:'st-done',lbl:'Hoàn tất'},
+  {id:'DH-8771',i:4,val:92000000,st:'st-done',lbl:'Hoàn tất'},
+];
+document.getElementById('order-rows').innerHTML = orders.map(function(o){
+  var p=prods[o.i]||prods[0];
+  return '<tr><td><b>'+o.id+'</b></td><td>'+p.manufacturer+' — '+p.title.slice(0,42)+'…</td>'
+    +'<td>'+vnd(o.val)+'</td><td><span class="status '+o.st+'">'+o.lbl+'</span></td>'
+    +'<td><a class="link" href="#">Chi tiết →</a></td></tr>';
+}).join('');
+</script>
+</body>
+</html>

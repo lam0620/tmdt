@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Danh mục sản phẩm — Đạt Hiển | Mockup</title>
+<link rel="stylesheet" href="assets/app.css"/>
+</head>
+<body>
+<div id="site-header"></div>
+
+<div class="wrap">
+  <div class="crumb"><a href="index.html">Trang chủ</a><span class="sep">›</span><a href="#">Thiết bị</a><span class="sep">›</span><span>Tất cả sản phẩm</span></div>
+</div>
+
+<div class="wrap cat-layout">
+  <!-- FILTERS -->
+  <aside class="filters" id="filters"></aside>
+
+  <!-- LISTING -->
+  <div>
+    <h1 class="section-title">Danh mục sản phẩm</h1>
+    <p class="lead">Duyệt theo <b>danh mục</b>, <b>hãng sản xuất</b> hoặc <b>tiêu chuẩn</b>. Thiết bị hỗ trợ yêu cầu báo giá (B2B); vật tư & hóa chất có thể mua trực tiếp (B2C).</p>
+    <div class="toolbar">
+      <div class="count">Hiển thị <b id="showing">0</b> / <b id="total">0</b> sản phẩm</div>
+      <div style="display:flex;gap:12px;align-items:center">
+        <select class="field" style="width:auto;padding:8px 12px"><option>Sắp xếp: Liên quan nhất</option><option>Tên A→Z</option><option>Hãng sản xuất</option><option>Mới nhất</option></select>
+        <div class="seg"><button class="on">▦ Lưới</button><button>≡ Danh sách</button></div>
+      </div>
+    </div>
+    <div class="grid g-3" id="listing"></div>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+
+<script src="assets/logo.js"></script>
+<script src="assets/catalog.js"></script>
+<script src="assets/app.js"></script>
+<script>
+DH.mountShell({cart:3});
+var prods = DH.flatProducts();
+
+// build filters
+var cats={}, mans={}, stds={}, devs={};
+prods.forEach(function(p){
+  cats[p.category]=(cats[p.category]||0)+1;
+  mans[p.manufacturer]=(mans[p.manufacturer]||0)+1;
+  p.standards.forEach(function(s){ var k=s.split(' ')[0]; stds[k]=(stds[k]||0)+1; });
+  if(p.deviceBrand) devs[p.deviceBrand]=(devs[p.deviceBrand]||0)+1;
+});
+function group(title,obj,limit){
+  var keys=Object.keys(obj).sort(function(a,b){return obj[b]-obj[a]});
+  if(limit) keys=keys.slice(0,limit);
+  return '<div class="f-group"><h5>'+title+'</h5>'+keys.map(function(k){
+    return '<label class="f-check"><input type="checkbox"/> '+k+'<span class="c">'+obj[k]+'</span></label>';
+  }).join('')+'</div>';
+}
+document.getElementById('filters').innerHTML =
+  group('Danh mục',cats)
+  + group('Hãng sản xuất',mans,12)
+  + (Object.keys(devs).length ? group('Tương thích với thiết bị',devs) : '')
+  + group('Tiêu chuẩn',stds,8)
+  + '<div class="f-group"><h5>Khoảng giá</h5><label class="f-check"><input type="checkbox"/> Có giá niêm yết</label><label class="f-check"><input type="checkbox"/> Báo giá theo yêu cầu</label></div>';
+
+// listing
+function card(p){
+  var std = p.standards.slice(0,3).map(function(s){return '<span class="pill std">'+s+'</span>'}).join('');
+  var isB2C = p.category!=='Thiết bị';
+  var foot = isB2C
+    ? '<span class="c-price"><small>Bán lẻ</small>Mua trực tiếp</span><span class="c-rfq teal">Thêm vào giỏ →</span>'
+    : '<span class="c-price"><small>Doanh nghiệp</small>Theo báo giá</span><span class="c-rfq">Yêu cầu báo giá →</span>';
+  return '<a class="card" href="product.html"><div class="thumb '+DH.thumbClass(p.category)+'"><span class="ico" aria-hidden="true">'+p.icon+'</span>'
+    +'<img class="thumb-img" src="'+p.img+'" alt="'+p.title.replace(/"/g,"")+'" loading="lazy" onerror="this.remove()"/>'
+    +'<span class="flag pill'+(isB2C?' teal':'')+'">'+(isB2C?p.category:'B2B')+'</span></div>'
+    +'<div class="c-body"><div class="c-man">'+p.manufacturer+' · '+p.line+'</div>'
+    +(p.deviceBrand?'<div class="c-oem">Tương thích: '+p.deviceBrand+'</div>':'')
+    +'<div class="c-name">'+p.title+'</div>'
+    +'<div class="c-std">'+std+'</div>'
+    +'<div class="c-foot">'+foot+'</div></div></a>';
+}
+document.getElementById('listing').innerHTML = prods.map(card).join('');
+document.getElementById('total').textContent = prods.length;
+document.getElementById('showing').textContent = prods.length;
+</script>
+</body>
+</html>

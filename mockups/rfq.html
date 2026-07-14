@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Yêu cầu báo giá (RFQ) — Đạt Hiển | Mockup</title>
+<link rel="stylesheet" href="assets/app.css"/>
+</head>
+<body>
+<div id="site-header"></div>
+
+<div class="wrap">
+  <div class="crumb"><a href="index.html">Trang chủ</a><span class="sep">›</span><span>Yêu cầu báo giá (RFQ)</span></div>
+  <h1 class="section-title">Yêu cầu báo giá</h1>
+  <p class="lead">Luồng dành cho khách hàng <b>B2B</b> — thay thế quy trình báo giá thủ công qua email/điện thoại. Gửi yêu cầu, nhận báo giá và tư vấn kỹ thuật, theo dõi trạng thái trực tuyến.</p>
+
+  <div class="steps">
+    <div class="step done"><span class="n">✓</span> Chọn sản phẩm</div><span class="bar"></span>
+    <div class="step on"><span class="n">2</span> Thông tin yêu cầu</div><span class="bar"></span>
+    <div class="step"><span class="n">3</span> Gửi & nhận báo giá</div>
+  </div>
+</div>
+
+<div class="wrap checkout-grid">
+  <!-- FORM -->
+  <div>
+    <div class="panel" style="margin-bottom:20px">
+      <h3 style="font-size:17px;margin-bottom:16px">Sản phẩm trong yêu cầu (3)</h3>
+      <div id="rfq-items"></div>
+      <a class="btn btn-ghost" style="margin-top:14px" href="catalog.html">+ Thêm sản phẩm từ danh mục</a>
+    </div>
+
+    <div class="panel">
+      <h3 style="font-size:17px;margin-bottom:16px">Thông tin doanh nghiệp & yêu cầu</h3>
+      <div class="f-row">
+        <div class="field"><label>Tên doanh nghiệp / tổ chức *</label><input value="Phòng QC — Công ty Lọc dầu ABC"/></div>
+        <div class="field"><label>Mã số thuế</label><input placeholder="0xxxxxxxxx"/></div>
+      </div>
+      <div class="f-row">
+        <div class="field"><label>Người liên hệ *</label><input placeholder="Họ và tên"/></div>
+        <div class="field"><label>Chức vụ</label><input placeholder="VD: Trưởng phòng thí nghiệm"/></div>
+      </div>
+      <div class="f-row">
+        <div class="field"><label>Email *</label><input value="lamn@i-stech.net"/></div>
+        <div class="field"><label>Điện thoại *</label><input placeholder="09xx xxx xxx"/></div>
+      </div>
+      <div class="f-row">
+        <div class="field"><label>Lĩnh vực ứng dụng</label>
+          <select><option>Phân tích xăng dầu & dầu nhớt</option><option>Kiểm tra vật liệu</option><option>Phân tích nguyên tố</option><option>Thực phẩm / Dược</option><option>Khác</option></select></div>
+        <div class="field"><label>Thời gian dự kiến mua</label>
+          <select><option>Trong tháng này</option><option>Quý này</option><option>Đang khảo sát ngân sách</option></select></div>
+      </div>
+      <div class="field"><label>Yêu cầu kỹ thuật / ghi chú thêm</label>
+        <textarea rows="3" placeholder="VD: cần đáp ứng ASTM D5191, kèm hiệu chuẩn, đào tạo vận hành, xuất hóa đơn VAT…"></textarea></div>
+      <label class="f-check"><input type="checkbox" checked/> Cần tư vấn kỹ thuật trước khi báo giá</label>
+      <label class="f-check"><input type="checkbox"/> Yêu cầu chào giá hợp đồng / đấu thầu</label>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="summary">
+    <h3 style="font-size:16px;margin-bottom:12px">Tóm tắt yêu cầu</h3>
+    <div class="s-row"><span>Số sản phẩm</span><b>3</b></div>
+    <div class="s-row"><span>Nhóm</span><b>Thiết bị B2B</b></div>
+    <div class="s-row"><span>Tài liệu kèm</span><b>CO/CQ, catalogue</b></div>
+    <div class="s-row s-total"><span>Giá</span><b>Sẽ báo qua RFQ</b></div>
+    <a class="btn btn-amber btn-block btn-lg" style="margin-top:16px" href="account.html">Gửi yêu cầu báo giá →</a>
+    <p class="muted" style="font-size:12.5px;margin-top:12px"><span data-icon="clock" data-icon-cls="u-i"></span>Cam kết phản hồi trong <b>24 giờ làm việc</b>. Bạn có thể theo dõi trạng thái trong mục <a href="account.html" style="color:var(--brand)">Tài khoản doanh nghiệp</a>.</p>
+    <div style="border-top:1px solid var(--line);margin-top:16px;padding-top:14px;font-size:13px" class="muted">
+      <div style="font-weight:700;color:var(--navy);margin-bottom:6px">Cần hỗ trợ ngay?</div>
+      <div style="display:flex;align-items:center;gap:7px;margin-bottom:4px"><span data-icon="phone" data-icon-cls="u-i"></span>028 6276 4010</div>
+      <div style="display:flex;align-items:center;gap:7px"><span data-icon="mail" data-icon-cls="u-i"></span>info@dat-hien.com</div>
+    </div>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+
+<script src="assets/logo.js"></script>
+<script src="assets/catalog.js"></script>
+<script src="assets/app.js"></script>
+<script>
+DH.mountShell({cart:3});
+var prods = DH.flatProducts().filter(function(p){return p.category==='Thiết bị'}).slice(0,3);
+document.getElementById('rfq-items').innerHTML = prods.map(function(p){
+  var std = p.standards.slice(0,2).map(function(s){return '<span class="pill std">'+s+'</span>'}).join('');
+  return '<div class="li"><div class="li-thumb"><img src="'+p.img+'" alt="" onerror="this.remove()"/></div>'
+    +'<div><div class="li-man">'+p.manufacturer+'</div><div class="li-name">'+p.title+'</div>'
+    +'<div class="c-std" style="margin-top:6px">'+std+'</div></div>'
+    +'<div style="text-align:right"><div class="qty"><button>−</button><span>1</span><button>+</button></div>'
+    +'<a href="#" class="muted" style="font-size:12px;display:block;margin-top:8px">Xóa</a></div></div>';
+}).join('');
+</script>
+</body>
+</html>
