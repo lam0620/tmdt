@@ -4,5 +4,6 @@
 # temp / editor / OS
 *.tmp
 *.tmp.*
+~$*
 Thumbs.db
 .DS_Store

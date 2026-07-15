@@ -113,7 +113,7 @@ header.site{position:sticky;top:0;z-index:60;background:#fff;border-bottom:1px s
 nav.cats{background:var(--navy);position:relative}
 .cats .wrap{display:flex;align-items:stretch;gap:2px;position:relative}
 .cat{position:static}
-.cat>a{display:flex;align-items:center;gap:8px;height:48px;padding:0 18px;color:#e6eef6;font-weight:600;font-size:14.5px;cursor:pointer}
+.cat>a{display:flex;align-items:center;gap:7px;height:48px;padding:0 13px;color:#e6eef6;font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap}
 .cat>a .chev{font-size:10px;opacity:.7;transition:.2s}
 .cat:hover>a,.cat.active>a{background:var(--brand)}
 .cat:hover>a .chev{transform:rotate(180deg)}

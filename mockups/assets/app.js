@@ -92,13 +92,21 @@
   function oemOf(p,m){ return p.deviceBrand || m.deviceBrand || ""; }
   function megaFor(cat){
     var mans = cat.manufacturers.filter(function(m){return m.name!=="Khác" || m.count>0;});
-    // consumable-style: mọi sản phẩm trong danh mục đều có OEM tương thích
-    var allP = [];
-    mans.forEach(function(m){ m.lines.forEach(function(ln){ ln.products.forEach(function(p){ allP.push(oemOf(p,m)); }); }); });
-    var useOEM = allP.length>0 && allP.every(Boolean);
+    // gom panel theo OEM CHỈ khi rail (Hãng SX) khác OEM (OEM là trục con thực sự).
+    // Nếu rail đã chính là OEM (manufacturer.name == deviceBrand) → gom panel theo dòng/loại.
+    var useOEM = mans.length > 0;
+    mans.forEach(function(m){ m.lines.forEach(function(ln){ ln.products.forEach(function(p){
+      var oem = oemOf(p,m);
+      if(!oem || oem === m.name) useOEM = false;
+    }); }); });
 
-    // left rail: Hãng sản xuất
-    var left = '<div class="mm-h">Hãng sản xuất</div>';
+    // rail = OEM (hãng thiết bị) khi mọi sp có oem == tên rail; ngược lại là Hãng sản xuất (thiết bị)
+    var railIsOem = mans.length > 0;
+    mans.forEach(function(m){ m.lines.forEach(function(ln){ ln.products.forEach(function(p){
+      if(oemOf(p,m) !== m.name) railIsOem = false;
+    }); }); });
+    var railLabel = railIsOem ? "Hãng thiết bị (OEM)" : "Hãng sản xuất";
+    var left = '<div class="mm-h">'+railLabel+'</div>';
     mans.forEach(function(m,i){
       left += '<div class="mm-man'+(i===0?' on':'')+'" data-mm="'+esc(cat.name)+'|'+i+'">'
             + '<span>'+esc(m.name)+'</span><span class="c">'+m.count+'</span></div>';
@@ -147,7 +155,7 @@
     return '<div class="mega"><div class="mega-inner">'
          + '<div class="mm-left">'+left+'</div>'
          + '<div class="mm-right">'+right+'</div>'
-         + '<div class="mm-foot"><span class="k">'+esc(cat.name)+' · '+mans.length+' hãng · '+cat.count+' sản phẩm</span>'
+         + '<div class="mm-foot"><span class="k">'+esc(cat.name)+' · '+mans.length+(railIsOem?' hãng thiết bị':' hãng')+' · '+cat.count+' sản phẩm</span>'
          + '<a class="link" style="color:var(--brand);font-weight:700" href="catalog.html">Xem toàn bộ danh mục '+esc(cat.name)+' →</a></div>'
          + '</div></div>';
   }

@@ -45,7 +45,8 @@ var prods = DH.flatProducts();
 var cats={}, mans={}, stds={}, devs={}, insts={};
 prods.forEach(function(p){
   cats[p.category]=(cats[p.category]||0)+1;
-  mans[p.manufacturer]=(mans[p.manufacturer]||0)+1;
+  // "Hãng sản xuất" chỉ cho thiết bị (không có OEM); vật tư có OEM → tính ở facet "Hãng thiết bị (OEM)"
+  if(!p.deviceBrand) mans[p.manufacturer]=(mans[p.manufacturer]||0)+1;
   p.standards.forEach(function(s){ var k=s.split(' ')[0]; stds[k]=(stds[k]||0)+1; });
   if(p.deviceBrand) devs[p.deviceBrand]=(devs[p.deviceBrand]||0)+1;
   if(p.instrumentName) insts[p.instrumentName]=(insts[p.instrumentName]||0)+1;
@@ -60,7 +61,7 @@ function group(title,obj,limit){
 document.getElementById('filters').innerHTML =
   group('Danh mục',cats)
   + group('Hãng sản xuất',mans,12)
-  + (Object.keys(devs).length ? group('Tương thích với thiết bị',devs) : '')
+  + (Object.keys(devs).length ? group('Hãng thiết bị (OEM)',devs) : '')
   + (Object.keys(insts).length ? group('Dòng máy tương thích',insts) : '')
   + group('Tiêu chuẩn',stds,8)
   + '<div class="f-group"><h5>Khoảng giá</h5><label class="f-check"><input type="checkbox"/> Có giá niêm yết</label><label class="f-check"><input type="checkbox"/> Báo giá theo yêu cầu</label></div>';
