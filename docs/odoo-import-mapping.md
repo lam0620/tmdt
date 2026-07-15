@@ -57,9 +57,32 @@ Dữ liệu nguồn (theo `flatProducts()` trong mockup + cột Excel) → Odoo:
 
 Khi import bằng file, **quan hệ (Many2one/Many2many) nên dùng External ID** (cột `<field>/id`) để idempotent và tránh trùng tên.
 
-### 3.1 Danh mục
-- `category` → tạo trước 3 `product.category` (Thiết bị, Hóa chất, Tiêu hao) và `product.public.category` tương ứng.
-- `line` → `product.public.category` con, `parent_id` = category cha.
+### 3.1 Cây danh mục site (4 danh mục) & vì sao tách CRM
+
+> Giải thích đầy đủ (nguồn dữ liệu, lý do tách CRM, quy tắc phân loại): xem [catalog-taxonomy.md](catalog-taxonomy.md).
+
+Site có **4 danh mục lớn**:
+
+| Danh mục | Nguồn dữ liệu | Luồng |
+|---|---|---|
+| **Thiết bị** | DanhMuc (máy nguyên chiếc) | B2B / RFQ |
+| **Hóa chất** (reagent) | D038 EMAL: `Chemical Reagents`, `Pure Chemical Standards` | B2C |
+| **Chất chuẩn (CRM)** | D038 EMAL: các `*Reference Materials*`, `Synthetic Soil Standards` | B2C |
+| **Tiêu hao** | D038 EMAL: phần còn lại (O-ring, Quartz, Crucibles, Cones, capsules…) | B2C |
+
+**Vì sao tách "Chất chuẩn (CRM)" riêng, không gộp vào "Hóa chất":**
+1. **Khác bản chất sản phẩm** — CRM (vật liệu tham chiếu được chứng nhận) dùng để *hiệu chuẩn/kiểm soát chất lượng*, khách chọn theo *nền mẫu · giá trị chứng nhận · độ không đảm bảo*; khác hẳn reagent (hóa chất tiêu hao dùng hết rồi mua lại).
+2. **Theo chuẩn ngành** — alpharesources tách "Reference Materials / CRM" thành danh mục top riêng, ngoài "Consumables".
+3. **Quy mô lớn** (~2.834 dòng trong feed) đủ để đứng thành danh mục độc lập.
+
+**Mapping cột `Category` (D038) → danh mục site** (đã hiện thực trong [`tools/convert_catalog.py`](../tools/convert_catalog.py)):
+- `Chemical Reagents`, `Pure Chemical Standards` → **Hóa chất**
+- `Inorganic/Natural/Isotope Reference Materials`, `Reference Materials`, `Synthetic Soil Standards` → **Chất chuẩn (CRM)**
+- còn lại → **Tiêu hao**
+
+**Import Odoo:**
+- Tạo trước 4 `product.category` (nội bộ) + 4 `product.public.category` (website) tương ứng.
+- `line` (Category chi tiết, vd "Chemical Reagents", "Cones") → `product.public.category` **con**, `parent_id` = danh mục cha.
 - Cột import: `categ_id/id`, `public_categ_ids/id` (m2m: nhiều external id cách nhau bởi dấu `,` trong 1 ô).
 
 ### 3.2 Tiêu chuẩn & OEM tương thích → Tag hay Attribute?
