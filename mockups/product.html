@@ -226,9 +226,9 @@ document.getElementById('related').innerHTML = prods.map(function(p){
   return '<a class="card" href="product.html"><div class="thumb '+DH.thumbClass(p.category)+'"><span class="ico" aria-hidden="true">'+p.icon+'</span>'
     +'<img class="thumb-img" src="'+p.img+'" alt="'+p.title.replace(/"/g,"")+'" loading="lazy" onerror="this.remove()"/><span class="flag pill">B2B</span></div>'
     +'<div class="c-body"><div class="c-man">'+p.manufacturer+'</div>'
-    +(p.deviceBrand?'<div class="c-oem">Tương thích: '+p.deviceBrand+'</div>':'')
+    +((p.deviceBrand&&!p.sku)?'<div class="c-oem">Tương thích: '+p.deviceBrand+'</div>':'')
     +'<div class="c-name">'+p.title+'</div>'
-    +'<div class="c-std">'+std+'</div><div class="c-foot"><span class="c-price"><small>Doanh nghiệp</small>Theo báo giá</span><span class="c-rfq">Yêu cầu báo giá →</span></div></div></a>';
+    +DH.cardMeta(p)+'<div class="c-foot"><span class="c-price"><small>Doanh nghiệp</small>Theo báo giá</span><span class="c-rfq">Yêu cầu báo giá →</span></div></div></a>';
 }).join('');
 </script>
 </body>

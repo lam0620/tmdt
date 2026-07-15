@@ -1483,52 +1483,45 @@ window.CATALOG = {
      "deviceBrand": "",
      "lines": [
       {
-       "name": "Thuyền & chén nung gốm",
+       "name": "Chemical Reagents",
        "products": [
-        {"name":"Chén nung gốm chịu nhiệt cho máy phân tích C/S.","deviceLine":"Chén nung","model":"Chén nung gốm (hộp 1000)","standards":[],"deviceBrand":"LECO"},
-        {"name":"Thuyền sứ nung mẫu dùng cho lò đốt.","deviceLine":"Thuyền nung","model":"Thuyền sứ nung mẫu","standards":[],"deviceBrand":"HORIBA"}
+        {"model":"EMADrone Magnesium Perchlorate 501-171 454g","name":"Magnesium Perchlorate — chất hút ẩm cho máy phân tích Carbon/Sulphur.","deviceLine":"Chemical Reagents","standards":[],"deviceBrand":"ELTRA","sku":"B1161","oemPart":"90200","instrumentType":"Carbon Sulphur","instrumentName":"CHS580","pack":"454 g"},
+        {"model":"EMASORB II A Granular 20–30 mesh CO₂ Absorbant 500g","name":"Sodium Hydroxide — chất hấp thụ CO₂ (soda lime) dạng hạt 20–30 mesh.","deviceLine":"Chemical Reagents","standards":[],"deviceBrand":"ELTRA","sku":"B1316","oemPart":"","instrumentType":"Carbon Sulphur","instrumentName":"CHS580","pack":"500 g"},
+        {"model":"EMASORB II B Granular 8–20 mesh CO₂ Absorbant 500g","name":"Sodium Hydroxide — chất hấp thụ CO₂ dạng hạt 8–20 mesh.","deviceLine":"Chemical Reagents","standards":[],"deviceBrand":"ELTRA","sku":"B1317","oemPart":"90210","instrumentType":"Carbon Sulphur","instrumentName":"CHS580","pack":"500 g"}
        ]
       },
       {
-       "name": "Chất trợ dung & xúc tác",
+       "name": "Crucibles | Chén nung",
        "products": [
-        {"name":"Chất trợ dung sắt (iron chip) tăng khả năng cháy của mẫu.","deviceLine":"Trợ dung","model":"Trợ dung sắt (Iron chip)","standards":[],"deviceBrand":"LECO"},
-        {"name":"Chất trợ dung Tungsten (wolfram) nâng nhiệt độ phản ứng.","deviceLine":"Trợ dung","model":"Trợ dung Tungsten","standards":[],"deviceBrand":"ELTRA"}
-       ]
-      },
-      {
-       "name": "Ống đốt & thạch anh",
-       "products": [
-        {"name":"Ống đốt thạch anh cho máy phân tích nguyên tố.","deviceLine":"Ống đốt","model":"Ống đốt thạch anh","standards":[],"deviceBrand":"ELTRA"},
-        {"name":"Bông thạch anh (quartz wool) lót ống đốt.","deviceLine":"Ống đốt","model":"Bông thạch anh (quartz wool)","standards":[],"deviceBrand":"ANALYTIK JENA"}
+        {"model":"Chén nung gốm chịu nhiệt (hộp 1000)","name":"Chén nung gốm cho máy phân tích Carbon/Sulphur, hộp 1000 chiếc.","deviceLine":"Crucibles","standards":[],"deviceBrand":"LECO","sku":"501-024","oemPart":"528-018","instrumentType":"Carbon Sulphur","instrumentName":"CS844","pack":"hộp 1000"},
+        {"model":"Thuyền sứ nung mẫu (hộp 100)","name":"Thuyền sứ nung mẫu dùng cho lò đốt.","deviceLine":"Crucibles","standards":[],"deviceBrand":"HORIBA","sku":"EMA-712","oemPart":"","instrumentType":"Carbon Sulphur","instrumentName":"EMIA-Pro","pack":"hộp 100"}
        ]
       }
      ],
-     "count": 6
+     "count": 5
     },
     {
      "name": "SCIENTIFIC CONSUMABLES",
      "deviceBrand": "",
      "lines": [
       {
-       "name": "O-ring & gioăng làm kín",
+       "name": "O-ring & Seals",
        "products": [
-        {"name":"Bộ O-ring & gioăng làm kín buồng đốt.","deviceLine":"Gioăng","model":"Bộ O-ring làm kín (set)","standards":[],"deviceBrand":"LECO"},
-        {"name":"Gioăng seal cho đường dẫn khí.","deviceLine":"Gioăng","model":"Gioăng seal đường khí","standards":[],"deviceBrand":"HORIBA"}
+        {"model":"Bộ O-ring làm kín buồng đốt (set)","name":"Bộ O-ring & gioăng làm kín buồng đốt.","deviceLine":"Seals","standards":[],"deviceBrand":"LECO","sku":"SC-OR-11","oemPart":"90355","instrumentType":"Carbon Sulphur","instrumentName":"CS844","pack":"bộ 10"},
+        {"model":"Gioăng seal đường dẫn khí","name":"Gioăng seal thay thế cho đường dẫn khí.","deviceLine":"Seals","standards":[],"deviceBrand":"HORIBA","sku":"SC-GS-20","oemPart":"","instrumentType":"Carbon Sulphur","instrumentName":"EMIA-Pro","pack":"cái"}
        ]
       },
       {
-       "name": "Phụ kiện đường khí",
+       "name": "Reagents & Absorbants",
        "products": [
-        {"name":"Bộ lọc bụi bảo vệ detector.","deviceLine":"Bộ lọc","model":"Bộ lọc bụi đường khí","standards":[],"deviceBrand":"ELTRA"},
-        {"name":"Ống dẫn khí PTFE thay thế.","deviceLine":"Ống dẫn","model":"Ống dẫn khí PTFE","standards":[],"deviceBrand":"ANALYTIK JENA"}
+        {"model":"Anhydrone (Magnesium Perchlorate) 500g","name":"Chất hút ẩm Magnesium Perchlorate cho máy phân tích nguyên tố.","deviceLine":"Reagents","standards":[],"deviceBrand":"ANALYTIK JENA","sku":"SC-AN-500","oemPart":"","instrumentType":"Elemental (N/C/S)","instrumentName":"multi EA 4000","pack":"500 g"}
        ]
       }
      ],
-     "count": 4
+     "count": 3
     }
    ],
-   "count": 10
+   "count": 8
   }
  ]
 };

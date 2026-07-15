@@ -191,6 +191,11 @@ section.wrap{padding-top:44px;padding-bottom:44px}
 .card .c-body{padding:14px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
 .card .c-man{font-size:11.5px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.04em}
 .card .c-oem{font-size:11.5px;font-weight:600;color:#0c8478;margin-top:-2px}
+/* bảng thông tin vật tư trên thẻ: SKU / OEM Part / Tương thích / Quy cách */
+.card .c-specs{display:flex;flex-direction:column;gap:3px;font-size:12px;margin-top:2px}
+.card .c-specs div{display:flex;gap:6px;color:var(--navy);line-height:1.3}
+.card .c-specs span{color:var(--muted);flex:none;min-width:74px}
+.card .c-specs div:first-child{font-weight:700}
 .card .c-name{font-weight:600;color:var(--navy);font-size:14.5px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:39px}
 .card .c-std{display:flex;flex-wrap:wrap;gap:5px}
 .card .c-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:10px;border-top:1px solid var(--line-2)}

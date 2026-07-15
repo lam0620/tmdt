@@ -119,9 +119,9 @@ function card(p){
     +'<img class="thumb-img" src="'+p.img+'" alt="'+p.title.replace(/"/g,"")+'" loading="lazy" onerror="this.remove()"/>'
     +'<span class="flag pill'+(isB2C?' teal':'')+'">'+(isB2C?p.category:'B2B')+'</span></div>'
     +'<div class="c-body"><div class="c-man">'+p.manufacturer+'</div>'
-    +(p.deviceBrand?'<div class="c-oem">Tương thích: '+p.deviceBrand+'</div>':'')
+    +((p.deviceBrand&&!p.sku)?'<div class="c-oem">Tương thích: '+p.deviceBrand+'</div>':'')
     +'<div class="c-name">'+p.title+'</div>'
-    +'<div class="c-std">'+std+'</div>'
+    +DH.cardMeta(p)
     +'<div class="c-foot">'+foot+'</div></div></a>';
 }
 var picks=[]; var seenMan={};

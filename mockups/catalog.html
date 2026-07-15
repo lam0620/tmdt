@@ -42,12 +42,13 @@ DH.mountShell({cart:3});
 var prods = DH.flatProducts();
 
 // build filters
-var cats={}, mans={}, stds={}, devs={};
+var cats={}, mans={}, stds={}, devs={}, insts={};
 prods.forEach(function(p){
   cats[p.category]=(cats[p.category]||0)+1;
   mans[p.manufacturer]=(mans[p.manufacturer]||0)+1;
   p.standards.forEach(function(s){ var k=s.split(' ')[0]; stds[k]=(stds[k]||0)+1; });
   if(p.deviceBrand) devs[p.deviceBrand]=(devs[p.deviceBrand]||0)+1;
+  if(p.instrumentName) insts[p.instrumentName]=(insts[p.instrumentName]||0)+1;
 });
 function group(title,obj,limit){
   var keys=Object.keys(obj).sort(function(a,b){return obj[b]-obj[a]});
@@ -60,6 +61,7 @@ document.getElementById('filters').innerHTML =
   group('Danh mục',cats)
   + group('Hãng sản xuất',mans,12)
   + (Object.keys(devs).length ? group('Tương thích với thiết bị',devs) : '')
+  + (Object.keys(insts).length ? group('Dòng máy tương thích',insts) : '')
   + group('Tiêu chuẩn',stds,8)
   + '<div class="f-group"><h5>Khoảng giá</h5><label class="f-check"><input type="checkbox"/> Có giá niêm yết</label><label class="f-check"><input type="checkbox"/> Báo giá theo yêu cầu</label></div>';
 
@@ -74,14 +76,34 @@ function card(p){
     +'<img class="thumb-img" src="'+p.img+'" alt="'+p.title.replace(/"/g,"")+'" loading="lazy" onerror="this.remove()"/>'
     +'<span class="flag pill'+(isB2C?' teal':'')+'">'+(isB2C?p.category:'B2B')+'</span></div>'
     +'<div class="c-body"><div class="c-man">'+p.manufacturer+' · '+p.line+'</div>'
-    +(p.deviceBrand?'<div class="c-oem">Tương thích: '+p.deviceBrand+'</div>':'')
+    +((p.deviceBrand&&!p.sku)?'<div class="c-oem">Tương thích: '+p.deviceBrand+'</div>':'')
     +'<div class="c-name">'+p.title+'</div>'
-    +'<div class="c-std">'+std+'</div>'
+    +DH.cardMeta(p)
     +'<div class="c-foot">'+foot+'</div></div></a>';
 }
-document.getElementById('listing').innerHTML = prods.map(card).join('');
-document.getElementById('total').textContent = prods.length;
-document.getElementById('showing').textContent = prods.length;
+function render(list){
+  document.getElementById('listing').innerHTML = list.length
+    ? list.map(card).join('')
+    : '<div class="muted" style="padding:40px 0;grid-column:1/-1">Không tìm thấy sản phẩm phù hợp.</div>';
+  document.getElementById('showing').textContent = list.length;
+  document.getElementById('total').textContent = prods.length;
+}
+// tìm kiếm — khớp tên, hãng, dòng, tiêu chuẩn, SKU, OEM Part, dòng máy tương thích
+function haystack(p){
+  return [p.title,p.desc,p.manufacturer,p.line,p.deviceBrand,p.sku,p.oemPart,p.instrumentName,(p.standards||[]).join(' ')]
+    .join(' ').toLowerCase();
+}
+function applySearch(q){
+  q = (q||'').trim().toLowerCase();
+  render(q ? prods.filter(function(p){ return haystack(p).indexOf(q)>-1; }) : prods);
+}
+var box = document.getElementById('site-search');
+// từ khóa truyền qua URL (?q=) khi search từ trang khác
+var q0 = new URLSearchParams(location.search).get('q') || '';
+if(box && q0) box.value = q0;
+applySearch(q0);
+// lọc sống khi gõ ngay trên trang catalog
+if(box) box.addEventListener('input', function(){ applySearch(box.value); });
 </script>
 </body>
 </html>

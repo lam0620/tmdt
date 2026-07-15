@@ -255,10 +255,39 @@
       scrim.addEventListener('click',function(){ setOpen(false); });
       document.addEventListener('keydown',function(e){ if(e.key==='Escape') setOpen(false); });
     }
+
+    // tìm kiếm toàn site: Enter / bấm nút → sang catalog kèm ?q=
+    var sBox = document.getElementById('site-search');
+    var sBtn = document.querySelector('.s-btn');
+    var onCatalog = /catalog\.html(\?|$)/.test(location.pathname + location.search) || /catalog\.html$/.test(location.pathname);
+    function goSearch(){
+      var q = (sBox && sBox.value || '').trim();
+      // trên trang catalog đã có lọc sống theo 'input'; Enter chỉ cần blur (không reload)
+      if(onCatalog){ if(sBox) sBox.blur(); return; }
+      location.href = 'catalog.html' + (q ? '?q=' + encodeURIComponent(q) : '');
+    }
+    if(sBox) sBox.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); goSearch(); } });
+    if(sBtn) sBtn.addEventListener('click', function(e){ e.preventDefault(); goSearch(); });
   }
 
   var THUMB_CLASS = {"Thiết bị":"tb-equip","Hóa chất":"tb-chem","Tiêu hao":"tb-consum"};
   function thumbClass(cat){ return THUMB_CLASS[cat] || "tb-equip"; }
+
+  /* meta trên thẻ: vật tư (có SKU) → bảng SKU/OEM Part/Tương thích/Quy cách; còn lại → pill tiêu chuẩn */
+  function cardMeta(p){
+    if(p.sku){
+      var rows = [['SKU',p.sku]];
+      if(p.oemPart) rows.push(['OEM Part',p.oemPart]);
+      var compat = [p.deviceBrand, p.instrumentName].filter(Boolean).join(' · ');
+      if(compat) rows.push(['Tương thích',compat]);
+      if(p.pack) rows.push(['Quy cách',p.pack]);
+      return '<div class="c-specs">'+rows.map(function(r){
+        return '<div><span>'+r[0]+'</span>'+esc(r[1])+'</div>';
+      }).join('')+'</div>';
+    }
+    var std = (p.standards||[]).slice(0,3).map(function(s){return '<span class="pill std">'+esc(s)+'</span>';}).join('');
+    return '<div class="c-std">'+std+'</div>';
+  }
 
   /* flatten all products for listing/home; attaches category+manufacturer+line */
   function flatProducts(){
@@ -274,6 +303,7 @@
               category:cat.name, manufacturer:man.name, line:ln.name,
               deviceBrand:p.deviceBrand||man.deviceBrand||"",  /* OEM tương thích: ưu tiên cấp sản phẩm */
               title:title, desc:p.name, deviceLine:p.deviceLine,
+              sku:p.sku||"", oemPart:p.oemPart||"", instrumentType:p.instrumentType||"", instrumentName:p.instrumentName||"", pack:p.pack||"",
               standards:p.standards||[], icon:catSvg(cat.name),
               img:productImg(cat.name,i,(title||"")+" "+(ln.name||""))
             });
@@ -290,6 +320,7 @@
     allManufacturers: allManufacturers,
     flatProducts: flatProducts,
     thumbClass: thumbClass,
+    cardMeta: cardMeta,
     icon: svg,
     catSvg: catSvg,
     productImg: productImg,
